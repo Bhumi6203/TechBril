@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TechBril — Live Tech & Automation News</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff;--bg2:#f8f9fa;--bg3:#f1f3f4;--border:#e0e0e0;--bx:#eff3f4;--blue:#1a73e8;--blue2:#1557b0;--blue-lt:#e8f0fe;--purple:#7c3aed;--red:#ea4335;--green:#34a853;--yellow:#fbbc04;--text:#202124;--text2:#3c4043;--muted:#70757a;--xm:#536471;--sh:0 1px 6px rgba(32,33,36,.1);--sh2:0 2px 16px rgba(32,33,36,.15)}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{font-family:'Roboto',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:.35rem 1.5rem;background:var(--bg2);border-bottom:1px solid var(--border);font-size:.72rem;color:var(--muted)}
+.topbar-l{display:flex;align-items:center;gap:1.2rem}
+.live-pill{display:flex;align-items:center;gap:4px;color:var(--green);font-weight:500}
+.ldot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 1.4s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.abadge{padding:2px 9px;border-radius:4px;font-size:.65rem;font-weight:500}
+.a-demo{background:#fef7e0;color:#a07000;border:1px solid #fdd663}
+.a-live{background:#e6f4ea;color:#137333;border:1px solid #a8d5b5}
+.header{display:flex;align-items:center;gap:1rem;padding:.6rem 1.5rem;border-bottom:1px solid var(--border);background:#fff;position:sticky;top:0;z-index:200;box-shadow:var(--sh)}
+.logo-wrap{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.logo-svg{width:38px;height:38px}
+.logo-name{display:flex;align-items:baseline}
+.lT{font-size:1.55rem;font-weight:700;color:#1a73e8}
+.le{font-size:1.55rem;font-weight:700;color:#ea4335}
+.lc{font-size:1.55rem;font-weight:700;color:#fbbc04}
+.lh{font-size:1.55rem;font-weight:700;color:#1a73e8}
+.lB{font-size:1.55rem;font-weight:700;color:#7c3aed}
+.lr{font-size:1.55rem;font-weight:700;color:#34a853}
+.li{font-size:1.55rem;font-weight:700;color:#ea4335}
+.ll{font-size:1.55rem;font-weight:700;color:#1a73e8}
+.sw{flex:1;max-width:540px;position:relative}
+.sw input{width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);padding:.55rem 1rem .55rem 2.7rem;border-radius:24px;font-size:.88rem;font-family:'Roboto',sans-serif;outline:none;transition:all .2s}
+.sw input:focus{border-color:var(--blue);background:#fff;box-shadow:0 0 0 2px rgba(26,115,232,.12)}
+.sw input::placeholder{color:var(--muted)}
+.si{position:absolute;left:.9rem;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
+.hr{display:flex;align-items:center;gap:.6rem;margin-left:auto}
+.btn-o{background:transparent;border:1px solid var(--border);color:var(--blue);padding:.45rem 1rem;border-radius:4px;cursor:pointer;font-size:.82rem;font-weight:500;font-family:'Roboto',sans-serif;transition:all .2s}
+.btn-o:hover{background:var(--blue-lt)}
+.btn-s{background:var(--blue);border:none;color:#fff;padding:.47rem 1.1rem;border-radius:4px;cursor:pointer;font-size:.82rem;font-weight:500;font-family:'Roboto',sans-serif;transition:all .2s}
+.btn-s:hover{background:var(--blue2);box-shadow:var(--sh)}
+.btn-s:disabled{opacity:.45;cursor:not-allowed}
+.ad-top{background:#fff;border-bottom:1px solid var(--border);padding:.5rem 1.5rem;display:flex;align-items:center;justify-content:center;min-height:64px;position:relative}
+.adlbl{font-size:.57rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;position:absolute;top:4px;left:8px}
+.ad-ph{min-height:72px;background:var(--bg3);border:1px dashed #dadce0;border-radius:4px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:.72rem;width:100%;max-width:728px}
+.tabs{display:flex;border-bottom:1px solid var(--bx);overflow-x:auto;scrollbar-width:none;background:#fff}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:.85rem 1.2rem;cursor:pointer;font-size:.9rem;font-weight:700;color:var(--xm);border-bottom:2px solid transparent;white-space:nowrap;transition:all .15s;background:none;border-top:none;border-left:none;border-right:none;font-family:'Roboto',sans-serif;min-width:82px;text-align:center}
+.tab:hover{color:var(--text);background:rgba(15,20,25,.04)}
+.tab.active{color:var(--text);border-bottom-color:var(--text)}
+.ticker-wrap{background:#fff;border-bottom:1px solid var(--border);height:32px;display:flex;align-items:center;overflow:hidden}
+.ticker-label{background:var(--blue);color:#fff;font-size:.72rem;font-weight:700;padding:0 1rem;height:100%;display:flex;align-items:center;flex-shrink:0;letter-spacing:.05em;text-transform:uppercase}
+.ticker-scroll{overflow:hidden;flex:1;height:100%;display:flex;align-items:center}
+.ticker-inner{display:inline-flex;gap:3rem;animation:tick 70s linear infinite;white-space:nowrap}
+@keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.ti{font-size:.77rem;color:var(--text2)}.ti b{color:var(--blue);margin-right:4px;font-weight:500}
+.layout{display:grid;grid-template-columns:1fr 320px;min-height:calc(100vh - 175px)}
+.feed{padding:1.25rem 1.5rem;border-right:1px solid var(--bx)}
+.sidebar{padding:1.1rem;background:var(--bg2);display:flex;flex-direction:column;gap:.9rem}
+.stats{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.25rem}
+.chip{display:flex;align-items:center;gap:.4rem;background:#fff;border:1px solid var(--border);border-radius:20px;padding:.38rem .85rem;box-shadow:var(--sh);cursor:default;transition:box-shadow .15s}
+.chip:hover{box-shadow:var(--sh2)}
+.cn{font-size:.9rem;font-weight:700;color:var(--text)}.cl{font-size:.7rem;color:var(--muted)}
+.cdot{width:8px;height:8px;border-radius:50%}
+.cd0{background:linear-gradient(135deg,#1a73e8,#7c3aed)}.cd1{background:#1a73e8}.cd2{background:#7c3aed}.cd3{background:#34a853}.cd4{background:#ea4335}.cd5{background:#fbbc04}
+.featured{background:#fff;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:1rem;box-shadow:var(--sh);cursor:pointer;transition:box-shadow .2s;display:grid;grid-template-columns:1fr 180px}
+.featured:hover{box-shadow:var(--sh2)}
+.fb{padding:1.1rem 1.2rem}
+.flbl{font-size:.68rem;font-weight:500;color:var(--blue);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.4rem}
+.fmeta{display:flex;align-items:center;gap:.45rem;margin-bottom:.45rem;flex-wrap:wrap}
+.ftitle{font-size:1.08rem;font-weight:700;line-height:1.4;color:var(--text);margin-bottom:.45rem}
+.fsum{font-size:.82rem;color:var(--xm);line-height:1.7}
+.fsrc{font-size:.71rem;color:var(--muted);margin-top:.6rem;font-weight:500}
+.fi{overflow:hidden}
+.fi img{width:100%;height:100%;object-fit:cover;display:block;min-height:140px}
+.fi-ph{width:100%;min-height:140px;background:linear-gradient(135deg,#e8f0fe,#ede9fe);display:flex;align-items:center;justify-content:center;font-size:2.8rem}
+.ngrid{display:flex;flex-direction:column}
+.nc{display:flex;gap:.85rem;align-items:flex-start;padding:.9rem .4rem;border-bottom:1px solid var(--bx);cursor:pointer;transition:background .12s;border-radius:4px}
+.nc:last-child{border-bottom:none}
+.nc:hover{background:rgba(0,0,0,.02)}
+.nc:hover .nct{color:var(--blue)}
+.nth{width:72px;height:72px;border-radius:8px;object-fit:cover;flex-shrink:0;border:1px solid var(--border)}
+.nth-ph{width:72px;height:72px;border-radius:8px;background:linear-gradient(135deg,var(--bg3),var(--bg2));display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0}
+.nb{flex:1;min-width:0}
+.nm{display:flex;align-items:center;gap:.4rem;margin-bottom:.3rem;flex-wrap:wrap}
+.tag{font-size:.67rem;font-weight:500;padding:2px 9px;border-radius:12px}
+.t-tech{background:#e8f0fe;color:#1a73e8}
+.t-gadgets{background:#e6f4ea;color:#137333}
+.t-automation{background:#fce8e6;color:#c5221f}
+.t-ai{background:#ede9fe;color:#6d28d9}
+.t-security{background:#fef7e0;color:#a07000}
+.t-science{background:#e0f7fa;color:#006064}
+.t-general{background:#f1f3f4;color:#5f6368}
+.ntime{font-size:.71rem;color:var(--muted)}.nsrc{font-size:.71rem;color:var(--muted);font-weight:500}
+.nct{font-size:.91rem;font-weight:700;line-height:1.4;margin-bottom:.25rem;color:var(--text);transition:color .12s}
+.ncs{font-size:.79rem;color:var(--xm);line-height:1.65}
+.ad-if{background:var(--bg2);border:1px dashed #dadce0;border-radius:8px;padding:.85rem;margin:.75rem 0;text-align:center;position:relative}
+.ad-if .adlbl{position:static;display:block;margin-bottom:.4rem;text-align:left}
+.ad-if-ph{min-height:90px;background:#fff;border-radius:4px;border:1px dashed var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:.72rem}
+.widget{background:#fff;border:1px solid var(--border);border-radius:8px;padding:1rem;box-shadow:var(--sh)}
+.wtitle{font-size:.8rem;font-weight:700;color:var(--text2);margin-bottom:.75rem;padding-bottom:.5rem;border-bottom:1px solid var(--bx);display:flex;align-items:center;gap:6px}
+.wtitle::before{content:'';display:block;width:3px;height:13px;background:linear-gradient(180deg,var(--blue),var(--purple));border-radius:2px}
+.titem{display:flex;gap:.6rem;padding:.35rem;border-radius:4px;cursor:pointer;transition:background .12s;margin-bottom:.15rem;align-items:flex-start}
+.titem:hover{background:var(--bg3)}
+.tnum{font-size:.75rem;font-weight:700;color:#bdbdbd;min-width:18px;padding-top:1px}
+.ttext{font-size:.8rem;line-height:1.4;color:var(--text2)}
+.titem:hover .ttext{color:var(--blue)}
+.tc{display:flex;flex-wrap:wrap;gap:5px}
+.ad-side{background:#fff;border:1px solid var(--border);border-radius:8px;padding:.85rem;box-shadow:var(--sh);text-align:center;position:relative}
+.ad-side .adlbl{position:static;display:block;margin-bottom:.4rem;text-align:left}
+.ad-side-ph{min-height:200px;background:var(--bg3);border-radius:4px;border:1px dashed var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:.72rem}
+.loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3.5rem;gap:1rem;color:var(--muted)}
+.spin{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--blue);border-radius:50%;animation:spin .75s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.err{background:#fce8e6;border:1px solid #f5c6c2;border-radius:8px;padding:1.5rem;text-align:center}
+.err h3{color:var(--red);margin-bottom:.5rem;font-size:.95rem;font-weight:700}
+.err p{font-size:.8rem;line-height:1.65;margin-bottom:1rem;color:var(--text2)}
+.retry{background:var(--blue);border:none;color:#fff;padding:.5rem 1.2rem;border-radius:4px;cursor:pointer;font-size:.8rem;font-weight:500;font-family:'Roboto',sans-serif}
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:.9rem 1.5rem;display:flex;align-items:center;justify-content:space-between;font-size:.73rem;color:var(--muted);flex-wrap:wrap;gap:.5rem}
+footer a{color:var(--muted);text-decoration:none}
+footer a:hover{color:var(--blue)}
+.fl{display:flex;gap:1.2rem}
+@media(max-width:960px){.layout{grid-template-columns:1fr}.sidebar{display:none}}
+@media(max-width:620px){.header{flex-wrap:wrap}.sw{order:3;max-width:100%;width:100%}.featured{grid-template-columns:1fr}.fi{display:none}.stats{gap:.3rem}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-l">
+    <span id="topDate"></span>
+    <span class="live-pill"><span class="ldot"></span>Live updates</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:1rem">
+    <span class="abadge a-live" id="apiStatus">● Connecting…</span>
+    <span>Auto-refresh: 5 min</span>
+  </div>
+</div>
+
+<div class="header">
+  <a class="logo-wrap" href="#">
+    <svg class="logo-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="dg" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#a855f7"/>
+          <stop offset="100%" style="stop-color:#7c3aed"/>
+        </linearGradient>
+        <linearGradient id="rg" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" style="stop-color:#38bdf8"/>
+          <stop offset="100%" style="stop-color:#1a73e8"/>
+        </linearGradient>
+      </defs>
+      <ellipse cx="60" cy="76" rx="52" ry="18" fill="none" stroke="url(#rg)" stroke-width="3.5"/>
+      <ellipse cx="60" cy="76" rx="36" ry="12" fill="none" stroke="url(#rg)" stroke-width="3.5"/>
+      <ellipse cx="60" cy="76" rx="20" ry="7"  fill="none" stroke="url(#rg)" stroke-width="3"/>
+      <path d="M60 79 Q52 69 52 63 Q52 50 60 44 Q68 50 68 63 Q68 69 60 79Z" fill="url(#dg)"/>
+      <circle cx="60" cy="38" r="4.5" fill="#a855f7"/>
+      <circle cx="60" cy="28" r="3" fill="#a855f7" opacity=".7"/>
+      <circle cx="60" cy="20" r="1.8" fill="#a855f7" opacity=".5"/>
+    </svg>
+    <div class="logo-name">
+      <span class="lT">T</span><span class="le">e</span><span class="lc">c</span><span class="lh">h</span><span class="lB">B</span><span class="lr">r</span><span class="li">i</span><span class="ll">l</span>
+    </div>
+  </a>
+  <div class="sw">
+    <span class="si">🔍</span>
+    <input type="text" id="searchInput" placeholder="Search news, topics, sources…" oninput="handleSearch()">
+  </div>
+  <div class="hr">
+    <button class="btn-o">Sign in</button>
+    <button class="btn-s" id="rb" onclick="loadNews()">⟳ Refresh</button>
+  </div>
+</div>
+
+<div class="ad-top">
+  <span class="adlbl">Sponsored</span>
+  <!-- Replace with Google AdSense 728x90:
+  <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px"
+       data-ad-client="ca-pub-XXXXXXXX" data-ad-slot="XXXXXXXX"></ins>
+  <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script> -->
+  <div class="ad-ph">[ 728×90 Ad — Replace with your Google AdSense code ]</div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" data-s="all"       onclick="switchTab(this,'all')">For you</button>
+  <button class="tab" data-s="tech"             onclick="switchTab(this,'tech')">Tech</button>
+  <button class="tab" data-s="gadgets"          onclick="switchTab(this,'gadgets')">Gadgets</button>
+  <button class="tab" data-s="automation"       onclick="switchTab(this,'automation')">Automation</button>
+  <button class="tab" data-s="ai"               onclick="switchTab(this,'ai')">AI</button>
+  <button class="tab" data-s="security"         onclick="switchTab(this,'security')">Security</button>
+  <button class="tab" data-s="science"          onclick="switchTab(this,'science')">Science</button>
+</div>
+
+<div class="ticker-wrap">
+  <div class="ticker-label">Breaking</div>
+  <div class="ticker-scroll">
+    <div class="ticker-inner" id="ticker"><span class="ti">Fetching live headlines…</span></div>
+  </div>
+</div>
+
+<div class="layout">
+  <div class="feed">
+    <div class="stats">
+      <div class="chip"><span class="cdot cd0"></span><span class="cn" id="sT">—</span><span class="cl">Total</span></div>
+      <div class="chip"><span class="cdot cd1"></span><span class="cn" id="sTe">—</span><span class="cl">Tech</span></div>
+      <div class="chip"><span class="cdot cd2"></span><span class="cn" id="sAI">—</span><span class="cl">AI</span></div>
+      <div class="chip"><span class="cdot cd3"></span><span class="cn" id="sG">—</span><span class="cl">Gadgets</span></div>
+      <div class="chip"><span class="cdot cd4"></span><span class="cn" id="sAu">—</span><span class="cl">Auto</span></div>
+      <div class="chip"><span class="cdot cd5"></span><span class="cn" id="sSe">—</span><span class="cl">Security</span></div>
+    </div>
+    <div id="feedArea"><div class="loading"><div class="spin"></div>Connecting to Currents API…</div></div>
+  </div>
+
+  <div class="sidebar">
+    <div class="ad-side">
+      <span class="adlbl">Sponsored</span>
+      <!-- Replace with AdSense 300x250 -->
+      <div class="ad-side-ph">[ 300×250 Ad — Replace with AdSense ]</div>
+    </div>
+    <div class="widget">
+      <div class="wtitle">Trending now</div>
+      <div id="trending"><div style="font-size:.8rem;color:var(--muted)">Loading…</div></div>
+    </div>
+    <div class="widget">
+      <div class="wtitle">Topics</div>
+      <div class="tc" id="tagcloud"></div>
+    </div>
+    <div class="widget">
+      <div class="wtitle">Last updated</div>
+      <div id="lastUp" style="font-size:.8rem;color:var(--xm)">—</div>
+    </div>
+    <div class="ad-side">
+      <span class="adlbl">Sponsored</span>
+      <!-- Replace with AdSense 300x600 -->
+      <div class="ad-side-ph" style="min-height:280px">[ 300×600 Ad — Replace with AdSense ]</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div style="display:flex;align-items:center;gap:8px">
+    <svg width="16" height="16" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="fg2" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:#a855f7"/><stop offset="100%" style="stop-color:#7c3aed"/></linearGradient></defs>
+      <ellipse cx="60" cy="75" rx="50" ry="17" fill="none" stroke="#38bdf8" stroke-width="4"/>
+      <ellipse cx="60" cy="75" rx="30" ry="10" fill="none" stroke="#38bdf8" stroke-width="3.5"/>
+      <path d="M60 78 Q52 68 52 62 Q52 50 60 44 Q68 50 68 62 Q68 68 60 78Z" fill="url(#fg2)"/>
+      <circle cx="60" cy="37" r="4" fill="#a855f7"/>
+    </svg>
+    <strong style="color:var(--text)">TechBril</strong> &nbsp;·&nbsp; Live Tech &amp; Automation News &nbsp;·&nbsp;
+    <a href="https://currentsapi.services" target="_blank">Powered by Currents API</a>
+  </div>
+  <div class="fl">
+    <a href="#">About</a><a href="#">Privacy</a><a href="#">Terms</a>
+    <span id="footerTime"></span>
+  </div>
+</footer>
+
+<script>
+// ── YOUR CURRENTS API KEY ──
+const CURRENTS_KEY = 'dTJ_ejDP-C-l0wKAUHNrQfajuWtSlnEXOIJkHUXrBEEuOJpu';
+
+// Currents API category mapping
+// Currents supports: technology, science, world, business, entertainment, sports, health
+const SECTION_KEYWORDS = {
+  tech:       { category: 'technology', keyword: 'software OR hardware OR developer OR programming' },
+  gadgets:    { category: 'technology', keyword: 'smartphone OR gadget OR wearable OR laptop OR camera' },
+  automation: { category: 'technology', keyword: 'automation OR robot OR smart home OR AI assistant' },
+  ai:         { category: 'technology', keyword: 'artificial intelligence OR machine learning OR ChatGPT OR LLM' },
+  security:   { category: 'technology', keyword: 'cybersecurity OR hacking OR data breach OR malware OR ransomware' },
+  science:    { category: 'science',    keyword: 'breakthrough OR research OR space OR quantum OR biotech' },
+};
+
+const TCLS={tech:'t-tech',gadgets:'t-gadgets',automation:'t-automation',ai:'t-ai',security:'t-security',science:'t-science',general:'t-general'};
+const SECTIONS=['tech','gadgets','automation','ai','security','science'];
+
+// ── FALLBACK DEMO DATA ──
+function ago(m){return new Date(Date.now()-m*60000).toISOString();}
+const FALLBACK=[
+  {title:"Microsoft unveils Copilot+ PC lineup with on-device AI inference chips",summary:"Microsoft announced Copilot+ PCs featuring dedicated NPU chips capable of 45 TOPS, running AI workloads entirely on-device.",source:"The Verge",url:"#",tag:"tech",publishedAt:ago(12),image:null},
+  {title:"Google Chrome ships with quantum-resistant encryption by default",summary:"Google has enabled ML-KEM post-quantum cryptography in Chrome for all TLS connections, protecting users against future quantum computers.",source:"Ars Technica",url:"#",tag:"tech",publishedAt:ago(45),image:null},
+  {title:"Apple M4 Ultra benchmarks leak ahead of Mac Pro launch",summary:"Early Geekbench scores show a 40% multi-core improvement over M3 Ultra, expected to power an updated Mac Pro this quarter.",source:"MacRumors",url:"#",tag:"tech",publishedAt:ago(80),image:null},
+  {title:"Samsung Galaxy S25 FE spotted with 200MP camera in FCC filings",summary:"FCC documents reveal the Galaxy S25 FE with a 200MP sensor and 6000mAh battery, expected in Q3 2026.",source:"Android Authority",url:"#",tag:"gadgets",publishedAt:ago(22),image:null},
+  {title:"Sony WH-1000XM6: Best-in-class ANC gets even better",summary:"Sony's latest headphones feature a new dual-processor ANC system with 38 hours battery life, outperforming the XM5 in every metric.",source:"The Verge",url:"#",tag:"gadgets",publishedAt:ago(58),image:null},
+  {title:"DJI Mavic 4 Pro debuts with omnidirectional obstacle avoidance",summary:"DJI announced the Mavic 4 Pro with triple-camera Hasselblad system and full-sphere obstacle detection, flying 46 mins per charge.",source:"DPReview",url:"#",tag:"gadgets",publishedAt:ago(95),image:null},
+  {title:"Tesla Optimus Gen 3 begins trial deployment in Gigafactories",summary:"Tesla deployed its third-generation humanoid robot at select Gigafactory locations for real production tasks.",source:"Electrek",url:"#",tag:"automation",publishedAt:ago(28),image:null},
+  {title:"UiPath releases agentic AI for autonomous multi-step workflows",summary:"UiPath Autopilot enables AI agents to chain complex enterprise workflows, cutting processing time by 60%.",source:"ZDNet",url:"#",tag:"automation",publishedAt:ago(68),image:null},
+  {title:"Matter 1.4 adds AI-driven home scene automation support",summary:"The CSA released Matter 1.4 with native AI-based scene prediction and multi-device coordination for smart homes.",source:"The Ambient",url:"#",tag:"automation",publishedAt:ago(115),image:null},
+  {title:"Anthropic releases Claude 4 Opus with 1M token context window",summary:"Claude 4 Opus supports a one-million token context window and achieves state-of-the-art scores on legal and scientific reasoning.",source:"MIT Tech Review",url:"#",tag:"ai",publishedAt:ago(8),image:null},
+  {title:"Meta releases open-source multimodal AI rivaling GPT-4o",summary:"Llama 4 Scout supports text, images, video, and audio, benchmarking within 5% of GPT-4o on consumer hardware.",source:"TechCrunch",url:"#",tag:"ai",publishedAt:ago(38),image:null},
+  {title:"EU AI Act enforcement begins: companies rush to comply",summary:"The EU AI Act enforcement phase requires high-risk AI systems to undergo mandatory audits across Europe.",source:"Politico",url:"#",tag:"ai",publishedAt:ago(85),image:null},
+  {title:"Critical zero-day in Ivanti VPN exploited by nation-state actors",summary:"CISA issued an emergency directive after an Ivanti Connect Secure zero-day was actively exploited. Patches required within 48 hours.",source:"Krebs on Security",url:"#",tag:"security",publishedAt:ago(18),image:null},
+  {title:"Apple releases emergency patches for three iOS zero-days",summary:"Apple issued out-of-band updates addressing three actively exploited zero-days used to install spyware.",source:"TechCrunch",url:"#",tag:"security",publishedAt:ago(52),image:null},
+  {title:"NIST finalizes post-quantum cryptography standards",summary:"NIST published final versions of post-quantum algorithms ML-KEM and ML-DSA. Enterprises urged to begin migration.",source:"Dark Reading",url:"#",tag:"security",publishedAt:ago(98),image:null},
+  {title:"NASA Artemis III on track for 2027 lunar south pole landing",summary:"NASA confirmed Artemis III is scheduled for a 2027 landing near Shackleton Crater to search for water ice.",source:"NASA.gov",url:"#",tag:"science",publishedAt:ago(42),image:null},
+  {title:"CRISPR gene therapy cures sickle cell disease in 50-patient trial",summary:"Phase 3 CRISPR-Cas9 trial showed 94% of patients were transfusion-free one year after treatment.",source:"NEJM",url:"#",tag:"science",publishedAt:ago(72),image:null},
+  {title:"IBM quantum computer reaches 1000-qubit milestone",summary:"IBM Heron processor achieved 1,024 logical qubits with real-time error correction, enabling quantum advantage in chemistry.",source:"IEEE Spectrum",url:"#",tag:"science",publishedAt:ago(118),image:null},
+];
+
+let allNews=[], cur='all', searchQ='', usingFallback=false;
+
+function timeAgo(iso){
+  const d=(Date.now()-new Date(iso))/60000;
+  if(d<2)return'Just now';
+  if(d<60)return Math.round(d)+'m ago';
+  if(d<1440)return Math.round(d/60)+'h ago';
+  return Math.round(d/1440)+'d ago';
+}
+function tagEl(t){return`<span class="tag ${TCLS[t]||'t-general'}">${t}</span>`;}
+
+// Fetch from Currents API — works on ANY hosted site, no CORS issues
+async function fetchSection(section){
+  const cfg = SECTION_KEYWORDS[section];
+  const params = new URLSearchParams({
+    apiKey: CURRENTS_KEY,
+    language: 'en',
+    category: cfg.category,
+    keywords: cfg.keyword,
+    page_size: 6
+  });
+  const url = `https://api.currentsapi.services/v1/search?${params}`;
+  const res = await fetch(url);
+  if(!res.ok) throw new Error('HTTP ' + res.status);
+  const data = await res.json();
+  if(data.status !== 'ok') throw new Error(data.message || 'API error');
+  return (data.news || [])
+    .filter(a => a.title && a.description && a.title !== '[Removed]')
+    .slice(0, 5)
+    .map(a => ({
+      title:       a.title.trim(),
+      summary:     a.description || '',
+      source:      a.author || a.url?.match(/https?:\/\/([^/]+)/)?.[1] || 'Unknown',
+      url:         a.url || '#',
+      image:       a.image && a.image !== 'None' ? a.image : null,
+      tag:         section,
+      publishedAt: a.published || new Date().toISOString()
+    }));
+}
+
+function getFiltered(){
+  let news = cur==='all' ? allNews : allNews.filter(n=>n.tag===cur);
+  if(searchQ){
+    const q=searchQ.toLowerCase();
+    news=news.filter(n=>n.title.toLowerCase().includes(q)||(n.summary||'').toLowerCase().includes(q));
+  }
+  return [...news].sort((a,b)=>new Date(b.publishedAt)-new Date(a.publishedAt));
+}
+
+function render(){
+  const news=getFiltered();
+  if(!news.length){
+    document.getElementById('feedArea').innerHTML='<div class="loading" style="color:var(--muted)">No stories found.</div>';
+    return;
+  }
+  const [top,...rest]=news;
+
+  let html=`<div class="featured" onclick="openArt('${encodeURIComponent(top.url)}')">
+    <div class="fb">
+      <div class="flbl">⚡ Top story</div>
+      <div class="fmeta">${tagEl(top.tag)}<span class="nsrc">${top.source}</span><span class="ntime">· ${timeAgo(top.publishedAt)}</span></div>
+      <div class="ftitle">${top.title}</div>
+      <div class="fsum">${top.summary}</div>
+      <div class="fsrc">via ${top.source}</div>
+    </div>
+    <div class="fi">${top.image
+      ? `<img src="${top.image}" alt="" onerror="this.parentElement.innerHTML='<div class=\\'fi-ph\\'>📰</div>'">`
+      : `<div class="fi-ph">📰</div>`}
+    </div>
+  </div><div class="ngrid">`;
+
+  rest.forEach((n,i)=>{
+    if(i>0 && i%5===0){
+      html+=`<div class="ad-if"><span class="adlbl">Sponsored</span>
+        <!-- Replace with AdSense in-feed native ad -->
+        <div class="ad-if-ph">[ In-Feed Ad — Replace with Google AdSense ]</div>
+      </div>`;
+    }
+    html+=`<div class="nc" onclick="openArt('${encodeURIComponent(n.url)}')">
+      ${n.image
+        ? `<img class="nth" src="${n.image}" alt="" onerror="this.outerHTML='<div class=\\'nth-ph\\'>📄</div>'">`
+        : `<div class="nth-ph">📄</div>`}
+      <div class="nb">
+        <div class="nm">${tagEl(n.tag)}<span class="nsrc">${n.source}</span><span class="ntime">· ${timeAgo(n.publishedAt)}</span></div>
+        <div class="nct">${n.title}</div>
+        <div class="ncs">${n.summary}</div>
+      </div>
+    </div>`;
+  });
+  html+='</div>';
+  document.getElementById('feedArea').innerHTML=html;
+
+  // Stats
+  document.getElementById('sT').textContent=allNews.length;
+  document.getElementById('sTe').textContent=allNews.filter(n=>n.tag==='tech').length;
+  document.getElementById('sAI').textContent=allNews.filter(n=>n.tag==='ai').length;
+  document.getElementById('sG').textContent=allNews.filter(n=>n.tag==='gadgets').length;
+  document.getElementById('sAu').textContent=allNews.filter(n=>n.tag==='automation').length;
+  document.getElementById('sSe').textContent=allNews.filter(n=>n.tag==='security').length;
+
+  // Trending
+  const top5=[...allNews].sort((a,b)=>new Date(b.publishedAt)-new Date(a.publishedAt)).slice(0,5);
+  document.getElementById('trending').innerHTML=top5.map((n,i)=>
+    `<div class="titem" onclick="openArt('${encodeURIComponent(n.url)}')">
+      <div class="tnum">${i+1}.</div>
+      <div class="ttext">${n.title}</div>
+    </div>`
+  ).join('');
+
+  // Tag cloud
+  document.getElementById('tagcloud').innerHTML=SECTIONS.map(s=>
+    `<span class="tag ${TCLS[s]}" style="cursor:pointer;padding:4px 11px;border-radius:14px;font-size:.73rem;margin-bottom:4px" onclick="switchTabByName('${s}')">${s}</span>`
+  ).join('');
+
+  // Ticker
+  const tItems=[...allNews].sort((a,b)=>new Date(b.publishedAt)-new Date(a.publishedAt))
+    .slice(0,12).map(n=>`<span class="ti"><b>${n.source}</b> ${n.title}</span>`);
+  document.getElementById('ticker').innerHTML=[...tItems,...tItems].join('<span style="margin:0 1.5rem;color:#ddd">·</span>');
+
+  const now=new Date();
+  document.getElementById('lastUp').innerHTML=
+    `<strong style="color:var(--text)">${now.toLocaleTimeString()}</strong><br>
+     <span style="font-size:.71rem">${allNews.length} stories · ${usingFallback ? '⚠️ Demo data (check API key)' : '✅ Live from Currents API'}</span>`;
+  document.getElementById('footerTime').textContent=now.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+}
+
+function openArt(enc){
+  const u=decodeURIComponent(enc);
+  if(u && u!=='#') window.open(u,'_blank','noopener');
+}
+
+async function loadNews(){
+  allNews=[]; usingFallback=false;
+  const btn=document.getElementById('rb');
+  btn.disabled=true; btn.textContent='Loading…';
+  document.getElementById('feedArea').innerHTML='<div class="loading"><div class="spin"></div>Fetching live news from Currents API…</div>';
+  document.getElementById('apiStatus').className='abadge a-live';
+  document.getElementById('apiStatus').textContent='● Connecting…';
+
+  try {
+    // Load all sections in parallel
+    const results = await Promise.allSettled(SECTIONS.map(s => fetchSection(s)));
+    results.forEach(r => {
+      if(r.status==='fulfilled' && r.value.length) allNews.push(...r.value);
+    });
+
+    if(allNews.length > 0){
+      document.getElementById('apiStatus').className='abadge a-live';
+      document.getElementById('apiStatus').textContent='● Live News';
+    } else {
+      throw new Error('No articles returned');
+    }
+  } catch(e){
+    console.warn('Currents API error:', e.message);
+    usingFallback=true;
+    allNews=FALLBACK.map(n=>({
+      ...n,
+      publishedAt: new Date(new Date(n.publishedAt).getTime()+(Math.random()*600000-300000)).toISOString()
+    }));
+    document.getElementById('apiStatus').className='abadge a-demo';
+    document.getElementById('apiStatus').textContent='⚠️ Demo Mode';
+  }
+
+  render();
+  btn.disabled=false; btn.textContent='⟳ Refresh';
+}
+
+function switchTab(el,s){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active'); cur=s; render();
+}
+function switchTabByName(s){
+  const t=document.querySelector(`[data-s="${s}"]`);
+  if(t) switchTab(t,s);
+}
+function handleSearch(){
+  searchQ=document.getElementById('searchInput').value.trim(); render();
+}
+function updateDate(){
+  document.getElementById('topDate').textContent=
+    new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+}
+
+updateDate();
+loadNews();
+setInterval(loadNews, 5*60*1000);
+setInterval(updateDate, 60000);
+</script>
+</body>
+</html>
+HTMLEOF
+echo "Done"
